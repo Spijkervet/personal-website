@@ -1,0 +1,33 @@
+version: '3'
+services:
+  personal_website:
+    build: .
+    container_name: personal_website
+    ports:
+      - 80:3000 # temporarily
+
+    # networks:
+    #   - traefik
+#     labels:
+#       - "traefik.enable=true"
+#       - "traefik.backend=website"
+#       - "traefik.docker.network=traefik"
+#       - "traefik.frontend.rule=Host:jspijkervet.com"
+#       - "traefik.port=3000"
+
+#   traefik:
+#     image: traefik
+#     restart: always
+#     ports:
+#       - "80:80"
+#       - "443:443"
+#       - "8080:8080"
+#     volumes:
+#       - /var/run/docker.sock:/var/run/docker.sock:ro
+#       - ./traefik.toml:/traefik.toml
+#       - ./acme.json:/acme.json
+#     networks:
+#       - traefik
+
+# networks:
+#   traefik:
