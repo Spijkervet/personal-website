@@ -1,0 +1,32 @@
+version: '3.5'
+services:
+  ghost:
+    image: ghost
+    restart: always
+    environment:
+      mail__transport: SMTP
+      mail__options__service: GMail 
+      mail__options__auth__user: ${SMTP_USER} 
+      mail__options__auth__pass: ${SMTP_PASSWORD}
+      SMTP_FROM_ADDRESS: "janne.spijkervet@gmail.com"
+      url: https://ghost.jspijkervet.com
+      VIRTUAL_HOST: ghost.jspijkervet.com
+      VIRTUAL_PORT: 2368
+      LETSENCRYPT_HOST: ghost.jspijkervet.com
+      LETSENCRYPT_EMAIL: janne.spijkervet@gmail.com
+    networks:
+      - webproxy 
+    volumes:
+      - "data-ghost:/var/lib/ghost/content"
+
+volumes:
+  data-ghost:
+    name: data-ghost
+
+networks:
+  webproxy:
+<<<<<<< HEAD
+    external: true
+=======
+    external: true
+>>>>>>> 8342dc6db236af1c58fa59fafc52701510f46c73
