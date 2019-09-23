@@ -1,2 +1,2 @@
+docker-compose -f docker-compose-ghost.yml up -d
 docker-compose up -d
-docker exec -it personal_website /bin/bash -c yarn serve
