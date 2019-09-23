@@ -3,15 +3,14 @@ services:
   personal_website:
     build: .
     container_name: personal_website
+    environment:
+      VIRTUAL_HOST: jspijkervet.com
+      VIRTUAL_PORT: 9000
+      LETSENCRYPT_HOST: jspijkervet.com
+      LETSENCRYPT_EMAIL: janne.spijkervet@gmail.com
     networks:
-      - traefik
-    labels:
-      - "traefik.enable=true"
-      - "traefik.backend=website"
-      - "traefik.docker.network=traefik"
-      - "traefik.frontend.rule=Host:jspijkervet.com"
-      - "traefik.port=80"
+      - webproxy
 
 networks:
-  traefik:
+  webproxy:
     external: true

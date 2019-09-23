@@ -29,6 +29,6 @@ app.use('/', function(req,res){
     res.render('./public/index')
 });
 
-app.listen(80, function(){
-    console.log("Running on port 80")
+app.listen(9000, function(){
+    console.log("Running on port 9000")
 });

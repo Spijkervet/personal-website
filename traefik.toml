@@ -5,7 +5,7 @@ defaultEntryPoints = ["http", "https"]
 
 [web]
 # Port for the status/dashboard page
-address = ":8080"
+address = ":81"
 
 [entryPoints]
     [entryPoints.http]
@@ -30,5 +30,6 @@ email = "janne.spijkervet@gmail.com"
 storage = "acme.json"
 entryPoint = "https"
 onHostRule = true
-    [acme.httpChallenge]
-    entryPoint = "http"
+
+[acme.httpChallenge]
+entryPoint = "http"
