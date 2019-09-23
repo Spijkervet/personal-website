@@ -9,7 +9,7 @@ services:
       mail__options__auth__user: ${SMTP_USER} 
       mail__options__auth__pass: ${SMTP_PASSWORD}
       SMTP_FROM_ADDRESS: "janne.spijkervet@gmail.com"
-      url: https://jspijkervet.com
+      url: https://ghost.jspijkervet.com
       VIRTUAL_HOST: ghost.jspijkervet.com
       VIRTUAL_PORT: 2368
       LETSENCRYPT_HOST: ghost.jspijkervet.com
