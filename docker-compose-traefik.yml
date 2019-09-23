@@ -13,3 +13,7 @@ services:
       - ./acme.json:/acme.json
     networks:
       - traefik
+
+networks:
+  traefik:
+    external: true
