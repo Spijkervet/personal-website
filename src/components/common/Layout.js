@@ -32,6 +32,15 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
             <Helmet>
                 <html lang={site.lang} />
                 <style type="text/css">{`${site.codeinjection_styles}`}</style>
+                <script type="text/javascript" async src="https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.3/MathJax.js?config=TeX-MML-AM_CHTML">
+                    {`MathJax.Hub.Config({
+                        tex2jax: {
+                            inlineMath: [["$", "$"], ["\\(", "\\)"]],
+                            processEscapes: true
+                        }
+                    })`}
+                </script>
+
                 <body className={bodyClass} />
             </Helmet>
 
