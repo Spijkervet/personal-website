@@ -1,0 +1,3 @@
+[submodule "docker-compose-letsencrypt-nginx-proxy-companion"]
+	path = docker-compose-letsencrypt-nginx-proxy-companion
+	url = https://github.com/evertramos/docker-compose-letsencrypt-nginx-proxy-companion.git

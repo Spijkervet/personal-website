@@ -1,10 +1,10 @@
 {
   "development": {
     "apiUrl": "https://ghost.jspijkervet.com",
-    "contentApiKey": "8942a3ae062df513b5ecd91ca9"
+    "contentApiKey": "6572798bfa26b8b1dca007da14"
   },
   "production": {
     "apiUrl": "https://ghost.jspijkervet.com",
-    "contentApiKey": "8942a3ae062df513b5ecd91ca9"
+    "contentApiKey": "6572798bfa26b8b1dca007da14"
   }
 }
