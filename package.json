@@ -39,11 +39,8 @@
     "@fortawesome/fontawesome-svg-core": "^1.2.24",
     "@fortawesome/free-brands-svg-icons": "^5.11.1",
     "@fortawesome/react-fontawesome": "^0.1.4",
-    "@material-ui/core": "^4.4.2",
-    "@material-ui/styles": "^4.4.1",
     "@tryghost/helpers": "1.1.10",
     "@tryghost/helpers-gatsby": "1.0.13",
-    "bootstrap": "4",
     "cheerio": "1.0.0-rc.3",
     "foundation-sites": "^6.5.3",
     "gatsby": "2.15.18",
@@ -61,11 +58,9 @@
     "gatsby-source-filesystem": "2.1.24",
     "gatsby-source-ghost": "3.4.6",
     "gatsby-transformer-sharp": "2.2.15",
-    "jquery": "^3.4.1",
     "lodash": "4.17.15",
     "node-sass": "^4.12.0",
     "react": "16.9.0",
-    "react-bootstrap": "^1.0.0-beta.12",
     "react-dom": "16.9.0",
     "react-helmet": "5.2.1"
   }
