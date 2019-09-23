@@ -1,10 +1,10 @@
 {
   "development": {
-    "apiUrl": "http://localhost:2368",
-    "contentApiKey": "786cb4c6a2c2b8375199777c97"
+    "apiUrl": "http://jspijkervet.com:2368",
+    "contentApiKey": "dc95120e9e295c8fab09a86973"
   },
   "production": {
-    "apiUrl": "http://localhost:2368",
-    "contentApiKey": "786cb4c6a2c2b8375199777c97"
+    "apiUrl": "http://jspijkervet.com:2368",
+    "contentApiKey": "dc95120e9e295c8fab09a86973"
   }
 }

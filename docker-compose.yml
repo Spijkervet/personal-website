@@ -6,11 +6,6 @@ services:
     ports:
       - 80:9000 # temporarily
 
-  ghost:
-    image: ghost
-    restart: always
-    ports:
-      - 2368:2368
     # networks:
     #   - traefik
 #     labels:
