@@ -33,10 +33,6 @@ const DefaultLayout = ({ data, children, bodyClass, isHome }) => {
                 <html lang={site.lang} />
                 <style type="text/css">{`${site.codeinjection_styles}`}</style>
                 <body className={bodyClass} />
-                <link
-                    href="https://fonts.googleapis.com/css?family=Muli&display=swap"
-                    rel="stylesheet"
-                ></link>
             </Helmet>
 
             <div className="viewport">
