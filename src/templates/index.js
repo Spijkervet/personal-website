@@ -63,7 +63,7 @@ const Index = ({ data, location, pageContext }) => {
                         <div className="about-section">
                             <p>
                                 Currently working on my Master Thesis{" "}
-                                <a href="https://uva.nl">
+                                <a rel="noreferrer" href="https://uva.nl">
                                     @UniversityOfAmsterdam
                                 </a>{" "}
                                 in the field of Music Information Retrieval
@@ -74,6 +74,7 @@ const Index = ({ data, location, pageContext }) => {
                                 janne.spijkervet [at] gmail [dot] com
                             </p>
                             <a
+                                rel="noreferrer"
                                 target="_top"
                                 href="mailto:janne.spijkervet@gmail.com?subject=Hello!"
                             >
@@ -89,6 +90,7 @@ const Index = ({ data, location, pageContext }) => {
                     <div className="cell">
                         <div className="social-buttons">
                             <a
+                                rel="noreferrer"
                                 href="https://twitter.com/spijkervet"
                                 target="_blank"
                             >
@@ -96,6 +98,7 @@ const Index = ({ data, location, pageContext }) => {
                             </a>
 
                             <a
+                                rel="noreferrer"
                                 href="https://github.com/spijkervet"
                                 target="_blank"
                             >
@@ -103,6 +106,7 @@ const Index = ({ data, location, pageContext }) => {
                             </a>
 
                             <a
+                                rel="noreferrer"
                                 href="https://facebook.com/janne.spijkervet"
                                 target="_blank"
                             >
@@ -110,6 +114,7 @@ const Index = ({ data, location, pageContext }) => {
                             </a>
 
                             <a
+                                rel="noreferrer"
                                 href="https://instagram.com/jannespijkervet"
                                 target="_blank"
                             >
@@ -117,6 +122,7 @@ const Index = ({ data, location, pageContext }) => {
                             </a>
 
                             <a
+                                rel="noreferrer"
                                 href="https://medium.com/@janne.spijkervet"
                                 target="_blank"
                             >

@@ -9,6 +9,9 @@
  * via ids/classnames etc.
  *
  */
+
+ import "typeface-muli";
+
 var trustAllScripts = function () {
     var scriptNodes = document.querySelectorAll('.load-external-scripts script');
 
