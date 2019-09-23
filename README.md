@@ -1,12 +1,15 @@
-# Gatsby Starter Ghost
+# My personal website
 
-A starter template to build lightning fast websites with [Ghost](https://ghost.org) & [Gatsby](https://gatsbyjs.org)
+This is my personal, lightning fast websites built with with [Ghost](https://ghost.org) & [Gatsby](https://gatsbyjs.org)
 
-**Demo:** https://gatsby.ghost.org
+# PWA Scores
+![pwa-scores](https://imgur.com/g8FTKxW.png)
+
+**Demo:** https://jspijkervet.com
 
 &nbsp;
 
-![gatsby-starter-ghost](https://user-images.githubusercontent.com/120485/50913567-8ab8e380-142c-11e9-9e78-de02ded12fc6.jpg)
+![personal-website](https://imgur.com/F02Bl4F.png)
 
 &nbsp;
 
@@ -15,13 +18,13 @@ A starter template to build lightning fast websites with [Ghost](https://ghost.o
 
 ```bash
 # With Gatsby CLI
-gatsby new gatsby-starter-ghost https://github.com/TryGhost/gatsby-starter-ghost.git
+gatsby new personal-website https://github.com/spijkervet/personal-website.git
 ```
 
 ```bash
 # From Source
-git clone https://github.com/TryGhost/gatsby-starter-ghost.git
-cd gatsby-starter-ghost
+git clone https://github.com/spijkervet/personal-website.git
+cd personal-website
 ```
 
 Then install dependencies
@@ -40,7 +43,7 @@ Start the development server. You now have a Gatsby site pulling content from he
 gatsby develop
 ```
 
-By default, the starter will populate content from a default Ghost install located at https://gatsby.ghost.io.
+By default, the starter will populate content from my Ghost blog located at https://ghost.jspijkervet.com
 
 To use your own install, edit the `.ghost.json` config file with your credentials. You can find your `contentApiKey` in the "Integrations" screen in Ghost Admin. The minimum required version for Ghost is `2.10.0` in order to use this starter without issues.
 
@@ -52,7 +55,7 @@ The starter contains three config files specifically for deploying with Netlify.
 
 To deploy to your Netlify account, hit the button below.
 
-[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/TryGhost/gatsby-starter-ghost)
+[![Deploy to Netlify](https://www.netlify.com/img/deploy/button.svg)](https://app.netlify.com/start/deploy?repository=https://github.com/spijkervet/personal-website)
 
 Content API Keys are generally not considered to be sensitive information, they exist so that they can be changed in the event of abuse; so most people commit it directly to their `.ghost.json` config file. If you prefer to keep this information out of your repository you can remove this config and set [Netlify ENV variables](https://www.netlify.com/docs/continuous-deployment/#build-environment-variables) for production builds instead.
 
@@ -82,4 +85,4 @@ Gatsby `develop` uses the `development` config in `.ghost.json` - while Gatsby `
 
 # Copyright & License
 
-Copyright (c) 2013-2019 Ghost Foundation - Released under the [MIT license](LICENSE).
+Copyright (c) 2019 Janne Spijkervet and 2013-2019 Ghost Foundation - Released under the [MIT license](LICENSE).
