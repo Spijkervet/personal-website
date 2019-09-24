@@ -590,9 +590,11 @@ h6 {
 }
 
 .post-full-content {
-    max-width: 720px;
+    max-width: 728px;
+    padding-left: 24px;
+    padding-right: 24px;
     margin: 0 auto;
-    background: #fff;
+    // background: #fff;
 }
 
 .post-feature-image img {
@@ -1270,4 +1272,23 @@ a {transition: .25s all;}
 @-o-keyframes fadein {
     from { opacity: 0; }
     to   { opacity: 1; }
+}
+
+.content-body pre {
+    background: rgba(0, 0, 0, 0.05);
+    background-image: initial;
+    background-position-x: initial;
+    background-position-y: initial;
+    background-size: initial;
+    background-repeat-x: initial;
+    background-repeat-y: initial;
+    background-attachment: initial;
+    background-origin: initial;
+    background-clip: initial;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+code {
+    background-color: transparent;
+    color: black;
 }

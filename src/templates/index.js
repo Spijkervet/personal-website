@@ -15,6 +15,19 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import {
+    TwitterTimelineEmbed,
+    TwitterShareButton,
+    TwitterFollowButton,
+    TwitterHashtagButton,
+    TwitterMentionButton,
+    TwitterTweetEmbed,
+    TwitterMomentShare,
+    TwitterDMButton,
+    TwitterVideoEmbed,
+    TwitterOnAirButton
+} from "react-twitter-embed";
+
 /**
  * Main index page (home page)
  *
@@ -49,17 +62,15 @@ const Index = ({ data, location, pageContext }) => {
                     <div className="cell large-4"></div>
                     <div className="cell large-4">
                         <p>
-                            I am a music
-                            producer, programmer and occassional ethical hacker from Amsterdam. I am currently pursuing
-                            a Master's Degree in Artificial Intelligence at
-                            the University of Amsterdam. My research interests
-                            include the creative interaction between human and
-                            machine, involuntary musical imagery, music
-                            generation and recommender systems.
+                            I am a music producer, programmer and occassional
+                            ethical hacker from Amsterdam. I am currently
+                            pursuing a Master's Degree in Artificial
+                            Intelligence at the University of Amsterdam. My
+                            research interests include the creative interaction
+                            between human and machine, involuntary musical
+                            imagery, music generation and recommender systems.
                         </p>
-                        <p>
-                            
-                        </p>
+                        <p></p>
                         <div className="about-section">
                             <p>
                                 Currently working on my Master Thesis{" "}
@@ -86,6 +97,13 @@ const Index = ({ data, location, pageContext }) => {
                     </div>
                     <div className="cell large-4"></div>
                 </div>
+
+                <TwitterTimelineEmbed
+                    sourceType="profile"
+                    screenName="spijkervet"
+                    options={{ height: 200 }}
+                />
+
                 <div className="grid-x text-center site-titles">
                     <div className="cell">
                         <div className="social-buttons">

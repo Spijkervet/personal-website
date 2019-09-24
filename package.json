@@ -66,6 +66,7 @@
     "react": "16.9.0",
     "react-dom": "16.9.0",
     "react-helmet": "5.2.1",
+    "react-twitter-embed": "^2.0.8",
     "typeface-muli": "^0.0.71"
   }
 }
