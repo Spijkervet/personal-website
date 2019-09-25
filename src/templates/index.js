@@ -1,6 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
+import fetch from 'ismorphic-fetch'
 
 import { Layout, PostCard, Pagination } from "../components/common";
 import { MetaData } from "../components/common/meta";
@@ -14,21 +15,6 @@ import {
     faGithub
 } from "@fortawesome/free-brands-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
-
-import { ColorExtractor } from "react-color-extractor";
-
-import {
-    TwitterTimelineEmbed,
-    TwitterShareButton,
-    TwitterFollowButton,
-    TwitterHashtagButton,
-    TwitterMentionButton,
-    TwitterTweetEmbed,
-    TwitterMomentShare,
-    TwitterDMButton,
-    TwitterVideoEmbed,
-    TwitterOnAirButton
-} from "react-twitter-embed";
 
 import * as Vibrant from "node-vibrant";
 
