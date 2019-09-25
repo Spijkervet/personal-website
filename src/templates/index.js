@@ -15,6 +15,8 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
+import { ColorExtractor } from "react-color-extractor";
+
 import {
     TwitterTimelineEmbed,
     TwitterShareButton,
@@ -28,6 +30,15 @@ import {
     TwitterOnAirButton
 } from "react-twitter-embed";
 
+import * as Vibrant from "node-vibrant";
+
+// import {Spotify} from 'node-spotify-api'
+
+// var spotify = new Spotify({
+//   id: '',
+//   secret: ''
+// });
+
 /**
  * Main index page (home page)
  *
@@ -36,12 +47,185 @@ import {
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
-const Index = ({ data, location, pageContext }) => {
-    const posts = data.allGhostPost.edges;
 
-    return (
-        <>
-            {/* 
+function isLight(color) {
+    // Check the format of the color, HEX or RGB?
+    var r,
+        g,
+        b,
+        hsp = 0;
+    if (color.match(/^rgb/)) {
+        // If HEX --> store the red, green, blue values in separate variables
+        color = color.match(
+            /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
+        );
+
+        var r = color[1];
+        var g = color[2];
+        var b = color[3];
+    } else {
+        // If RGB --> Convert it to HEX: http://gist.github.com/983661
+        color = +(
+            "0x" + color.slice(1).replace(color.length < 5 && /./g, "$&$&")
+        );
+
+        var r = color >> 16;
+        var g = (color >> 8) & 255;
+        var b = color & 255;
+    }
+
+    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+    hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+
+    // Using the HSP value, determine whether the color is light or dark
+    if (hsp > 126.5) {
+        return true;
+    } else {
+        return false;
+    }
+}
+
+class Index extends React.Component {
+    // const Index = ({ data, location, pageContext }) => {
+
+    constructor(props) {
+        super(props);
+        this.state = {
+            colors: [],
+            currentlyPlayingTrack: "",
+            currentlyPlayingTrackImage: "",
+            currentlyPlayingTrackAlbum: "",
+            currentlyPlaying: false
+        };
+        this.getCurrentlyPlayingTrack();
+    }
+
+    getCurrentlyPlayingTrack() {
+        fetch(
+            `http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=${process.env.LASTFM_API_KEY}&format=json`,
+            {
+                method: "GET" // POST
+            }
+        )
+            .then(res => res.json())
+            .then(res => {
+                var trackName = res.recenttracks.track[0].name;
+                var trackImage = res.recenttracks.track[0].image[2]["#text"];
+                var trackArtist = res.recenttracks.track[0].artist["#text"];
+                var trackAlbum = res.recenttracks.track[0].album["#text"];
+                console.log(res.recenttracks.track[0]);
+
+                Vibrant.from(trackImage)
+                    .getPalette()
+                    .then(palette => {
+                        var color = palette.Vibrant.hex;
+                        var trackColor = isLight(color) ? "white" : "black";
+                        this.setState({
+                            currentlyPlayingTrackColor: trackColor,
+                            currentlyPlayingTrackBackgroundColor: color
+                        });
+                    })
+                    .catch(function(error) {
+                        console.log(
+                            "There has been a problem with your fetch operation: " +
+                                error.message
+                        );
+                    });
+
+                this.setState({
+                    currentlyPlayingTrack: trackName,
+                    currentlyPlayingTrackImage: trackImage,
+                    currentlyPlayingTrackArtist: trackArtist,
+                    currentlyPlayingTrackAlbum: trackAlbum,
+                    currentlyPlaying: true
+                });
+            })
+            .catch(e => {
+                this.setState({
+                    currentlyPlayingTrack: "-"
+                });
+            });
+    }
+
+    renderSwatches = () => {
+        const { colors } = this.state;
+
+        return colors.map((color, id) => {
+            return (
+                <div
+                    key={id}
+                    style={{
+                        backgroundColor: color,
+                        width: 100,
+                        height: 100
+                    }}
+                />
+            );
+        });
+    };
+
+    getColors = colors =>
+        this.setState(state => ({ colors: [...state.colors, ...colors] }));
+
+    render() {
+        const { data, location, pageContext } = this.props;
+        const posts = data.allGhostPost.edges;
+
+        const SpotifyTrack = (
+            <>
+                <span>I am currently listening this track on Spotify:</span>
+                <div
+                    className="grid-x spotify-track"
+                    data-equalizer
+                    style={{
+                        backgroundColor: this.state
+                            .currentlyPlayingTrackBackgroundColor
+                    }}
+                >
+                    <div
+                        className="cell small-4 spotify-image text-left"
+                        data-equalizer-watch
+                    >
+                        <div
+                            style={{
+                                background:
+                                    "linear-gradient(90deg, rgba(0,0,0,0) 30%, " +
+                                    this.state
+                                        .currentlyPlayingTrackBackgroundColor +
+                                    " 100%)",
+                                position: "absolute",
+                                top: 0,
+                                width: "inherit",
+                                height: "100%"
+                            }}
+                        ></div>
+                        <img src={this.state.currentlyPlayingTrackImage} />
+                    </div>
+                    <div
+                        className="cell small-8 text-left track-text"
+                        data-equalizer-watch
+                        style={{
+                            color: this.state.currentlyPlayingTrackColor
+                        }}
+                    >
+                        <div className="track">
+                            {this.state.currentlyPlayingTrack}
+                        </div>
+                        <div className="artist">
+                            <span>{this.state.currentlyPlayingTrackAlbum}</span>
+                            <span> - </span>
+                            <span>
+                                {this.state.currentlyPlayingTrackArtist}
+                            </span>
+                        </div>
+                    </div>
+                </div>
+            </>
+        );
+
+        return (
+            <>
+                {/* 
             
                 <div className="container">
                     <section className="post-feed">
@@ -54,103 +238,107 @@ const Index = ({ data, location, pageContext }) => {
                 </div>
             </Layout> */}
 
-            <MetaData location={location} />
+                <MetaData location={location} />
 
-            {/* <Container> */}
-            <Layout isHome={true}>
-                <div className="grid-x text-center site-titles intro-text">
-                    <div className="cell large-4"></div>
-                    <div className="cell large-4">
-                        <p>
-                            I am a music producer, programmer and occassional
-                            ethical hacker from Amsterdam. I am currently
-                            pursuing a Master's Degree in Artificial
-                            Intelligence at the University of Amsterdam. My
-                            research interests include the creative interaction
-                            between human and machine, involuntary musical
-                            imagery, music generation and recommender systems.
-                        </p>
-                        <p></p>
-                        <div className="about-section">
+                {/* <Container> */}
+                <Layout isHome={true}>
+                    <div className="grid-x text-center site-titles intro-text">
+                        <div className="cell large-4"></div>
+                        <div className="cell large-4">
                             <p>
-                                Currently working on my Master Thesis{" "}
-                                <a rel="noreferrer" href="https://uva.nl">
-                                    @UniversityOfAmsterdam
-                                </a>{" "}
-                                in the field of Music Information Retrieval
+                                I am a music producer, programmer and
+                                occassional ethical hacker from Amsterdam. I am
+                                currently pursuing a Master's Degree in
+                                Artificial Intelligence at the University of
+                                Amsterdam. My research interests include the
+                                creative interaction between human and machine,
+                                involuntary musical imagery, music generation
+                                and recommender systems.
                             </p>
+                            <p></p>
+                            <div className="about-section">
+                                <p>
+                                    Currently working on my Master Thesis{" "}
+                                    <a rel="noreferrer" href="https://uva.nl">
+                                        @UniversityOfAmsterdam
+                                    </a>{" "}
+                                    in the field of Music Information Retrieval
+                                </p>
+                            </div>
+                            <div className="spotify-section">
+                                {this.state.currentlyPlaying ? 
+                                SpotifyTrack
+                                 : ''
+                                }
+                            </div>
+                            <div>
+                                <p className="email">
+                                    janne.spijkervet [at] gmail [dot] com
+                                </p>
+                                <a
+                                    rel="noreferrer"
+                                    target="_top"
+                                    href="mailto:janne.spijkervet@gmail.com?subject=Hello!"
+                                >
+                                    <div className="button contact-button">
+                                        Say Hello!
+                                    </div>
+                                </a>
+                            </div>
                         </div>
-                        <div>
-                            <p className="email">
-                                janne.spijkervet [at] gmail [dot] com
-                            </p>
-                            <a
-                                rel="noreferrer"
-                                target="_top"
-                                href="mailto:janne.spijkervet@gmail.com?subject=Hello!"
-                            >
-                                <div className="button contact-button">
-                                    Say Hello!
-                                </div>
-                            </a>
-                        </div>
+                        <div className="cell large-4"></div>
                     </div>
-                    <div className="cell large-4"></div>
-                </div>
-
-                <TwitterTimelineEmbed
+                    {/* <TwitterTimelineEmbed
                     sourceType="profile"
                     screenName="spijkervet"
                     options={{ height: 200 }}
-                />
+                /> */}
+                    <div className="grid-x text-center site-titles">
+                        <div className="cell">
+                            <div className="social-buttons">
+                                <a
+                                    rel="noreferrer"
+                                    href="https://twitter.com/spijkervet"
+                                    target="_blank"
+                                >
+                                    <FontAwesomeIcon icon={faTwitter} />
+                                </a>
 
-                <div className="grid-x text-center site-titles">
-                    <div className="cell">
-                        <div className="social-buttons">
-                            <a
-                                rel="noreferrer"
-                                href="https://twitter.com/spijkervet"
-                                target="_blank"
-                            >
-                                <FontAwesomeIcon icon={faTwitter} />
-                            </a>
+                                <a
+                                    rel="noreferrer"
+                                    href="https://github.com/spijkervet"
+                                    target="_blank"
+                                >
+                                    <FontAwesomeIcon icon={faGithub} />
+                                </a>
 
-                            <a
-                                rel="noreferrer"
-                                href="https://github.com/spijkervet"
-                                target="_blank"
-                            >
-                                <FontAwesomeIcon icon={faGithub} />
-                            </a>
+                                <a
+                                    rel="noreferrer"
+                                    href="https://facebook.com/janne.spijkervet"
+                                    target="_blank"
+                                >
+                                    <FontAwesomeIcon icon={faFacebook} />
+                                </a>
 
-                            <a
-                                rel="noreferrer"
-                                href="https://facebook.com/janne.spijkervet"
-                                target="_blank"
-                            >
-                                <FontAwesomeIcon icon={faFacebook} />
-                            </a>
+                                <a
+                                    rel="noreferrer"
+                                    href="https://instagram.com/jannespijkervet"
+                                    target="_blank"
+                                >
+                                    <FontAwesomeIcon icon={faInstagram} />
+                                </a>
 
-                            <a
-                                rel="noreferrer"
-                                href="https://instagram.com/jannespijkervet"
-                                target="_blank"
-                            >
-                                <FontAwesomeIcon icon={faInstagram} />
-                            </a>
-
-                            <a
-                                rel="noreferrer"
-                                href="https://medium.com/@janne.spijkervet"
-                                target="_blank"
-                            >
-                                <FontAwesomeIcon icon={faMedium} />
-                            </a>
+                                <a
+                                    rel="noreferrer"
+                                    href="https://medium.com/@janne.spijkervet"
+                                    target="_blank"
+                                >
+                                    <FontAwesomeIcon icon={faMedium} />
+                                </a>
+                            </div>
                         </div>
                     </div>
-                </div>
-
-                {/* <div className="grid-x">
+                    {/* <div className="grid-x">
                     <div className="cell small-12 large-3 name-section">
                         <div className="about-titles">
                             <h1>Songwriter.</h1>
@@ -203,17 +391,17 @@ const Index = ({ data, location, pageContext }) => {
                         </div>
                     </div>
                 </div> */}
-                {/* </Container> */}
-                <section className="post-feed">
-                    {posts.map(({ node }) => (
-                        // The tag below includes the markup for each post - components/common/PostCard.js
-                        <PostCard key={node.id} post={node} />
-                    ))}
-                </section>
-                <Pagination pageContext={pageContext} />
-            </Layout>
+                    {/* </Container> */}
+                    <section className="post-feed">
+                        {posts.map(({ node }) => (
+                            // The tag below includes the markup for each post - components/common/PostCard.js
+                            <PostCard key={node.id} post={node} />
+                        ))}
+                    </section>
+                    <Pagination pageContext={pageContext} />
+                </Layout>
 
-            {/* <Container>
+                {/* <Container>
           <h1 id="opensource">Open Source</h1>
           <Row className='grid-row'>
             <Col md={3} xs={12}>
@@ -233,7 +421,7 @@ const Index = ({ data, location, pageContext }) => {
           </Row>
         </Container> */}
 
-            {/* <Container>
+                {/* <Container>
                 <h1 id="courses">Courses</h1>
                 <Row className="grid-row">
                     <Col mb={3}>
@@ -344,9 +532,10 @@ const Index = ({ data, location, pageContext }) => {
                     </Col>
                 </Row>
             </Container> */}
-        </>
-    );
-};
+            </>
+        );
+    }
+}
 
 Index.propTypes = {
     data: PropTypes.shape({
@@ -355,7 +544,8 @@ Index.propTypes = {
     location: PropTypes.shape({
         pathname: PropTypes.string.isRequired
     }).isRequired,
-    pageContext: PropTypes.object
+    pageContext: PropTypes.object,
+    currentlyPlayingTrack: PropTypes.string
 };
 
 export default Index;

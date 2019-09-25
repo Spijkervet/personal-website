@@ -1,5 +1,5 @@
-@import 'settings';
-@import '~foundation-sites/scss/foundation';
+@import "settings";
+@import "~foundation-sites/scss/foundation";
 
 @include foundation-everything;
 @include foundation-global-styles;
@@ -8,7 +8,7 @@
 
 // Grids (choose one)
 @include foundation-xy-grid-classes(
-  /* options
+    /* options
   $base-grid: true,
   $margin-grid: true,
   $padding-grid: true,
@@ -19,7 +19,6 @@
   $frame-grid: true
   */
 );
-
 
 /* App.css
 /* ---------------------------------------------------------- /*
@@ -42,41 +41,39 @@ what's here to work the way you'd like it to.
 /* Variables
 /* ---------------------------------------------------------- */
 
-
 $base-color: #fc63b0;
 $grey-color: #9e9e9e;
 
 @font-face {
-  font-family: "Muli";
-  src: url("../../static/fonts/Muli/Muli-Bold.ttf")   format("tff");
-  font-weight: bold;
-} 
-
-
+    font-family: "Muli";
+    src: url("../../static/fonts/Muli/Muli-Bold.ttf") format("tff");
+    font-weight: bold;
+}
 
 @font-face {
-  font-family: "Muli";
-  src: url("../../static/fonts/Muli/Muli-Regular.ttf")   format("tff");
-  font-weight: normal;
-} 
+    font-family: "Muli";
+    src: url("../../static/fonts/Muli/Muli-Regular.ttf") format("tff");
+    font-weight: normal;
+}
 
 @font-face {
-  font-family: "Muli";
-  src: url("../../static/fonts/Muli/Muli-Light.ttf")    format("tff");
-  font-weight: lighter;
-} 
+    font-family: "Muli";
+    src: url("../../static/fonts/Muli/Muli-Light.ttf") format("tff");
+    font-weight: lighter;
+}
 
 :root {
-
     /* Colours */
     --color-primary: #3eb0ef;
-    --color-base: #15171A;
+    --color-base: #15171a;
     --color-secondary: rgb(247, 247, 247);
     --color-border: #c7d5d8;
     --color-bg: #f5f5f5;
 
     /* Fonts */
-    --font-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+    --font-sans-serif: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+        "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+        "Helvetica Neue", sans-serif;
     --font-serif: Georgia, Times, serif;
     --font-mono: Menlo, Courier, monospace;
     --font-light: 100;
@@ -88,9 +85,7 @@ $grey-color: #9e9e9e;
     --height: 4rem;
     --margin: 2rem;
     --radius: 0.6rem;
-
 }
-
 
 /* Reset
 /* ---------------------------------------------------------- */
@@ -357,7 +352,8 @@ html {
 body {
     overflow-x: hidden;
     color: #3c484e;
-    font-family: 'Muli', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    font-family: "Muli", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
     font-size: 1.5rem;
     line-height: 1.6em;
     font-weight: 400;
@@ -614,7 +610,7 @@ h6 {
 }
 
 .content-body h1 {
-    margin: 1.0em 0 0.5em 0;
+    margin: 1em 0 0.5em 0;
     font-size: 3.4rem;
     font-weight: 700;
 }
@@ -676,7 +672,7 @@ h6 {
     margin: 0.5em 0;
     padding: 1em 0 1.5em;
     border: 0;
-    font-family: Georgia,serif;
+    font-family: Georgia, serif;
     color: var(--color-primary);
     font-style: italic;
     font-size: 3.2rem;
@@ -686,7 +682,7 @@ h6 {
 
 .content-body h6 {
     margin: 0.5em 0 0.2em 0;
-    font-size: 2.0rem;
+    font-size: 2rem;
     font-weight: 700;
 }
 
@@ -769,7 +765,6 @@ h6 {
     opacity: 0.7;
 }
 
-
 .site-nav-button {
     display: inline-block;
     padding: 5px 10px;
@@ -818,7 +813,7 @@ h6 {
     color: inherit;
     text-decoration: none;
     background-color: white;
-    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, .05);
+    box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.05);
     padding-left: 3em;
     padding-right: 3em;
     padding-bottom: 3em;
@@ -832,6 +827,14 @@ h6 {
 }
 
 .post-card:hover {
+    -webkit-box-shadow: rgba(39, 44, 49, 0.07) 8px 28px 50px,
+        rgba(39, 44, 49, 0.04) 1px 6px 12px;
+    box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
+        1px 6px 12px rgba(39, 44, 49, 0.04);
+    -webkit-transition: all 0.4s ease;
+    transition: all 0.4s ease;
+    -webkit-transform: translate3D(0, -1px, 0) scale(1.02);
+    transform: translate3D(0, -1px, 0) scale(1.02);
     text-decoration: none;
 }
 
@@ -842,7 +845,6 @@ h6 {
     // color: var(--color-secondary);
     color: $base-color;
 }
-
 
 .post-card-title {
     margin: 0 0 10px 0;
@@ -902,7 +904,6 @@ h6 {
     width: 26px;
 }
 
-
 /* Tag Archives
 /* ---------------------------------------------------------- */
 
@@ -931,7 +932,6 @@ h6 {
         font-size: 1.7rem;
     }
 }
-
 
 /* Author Archives
 /* ---------------------------------------------------------- */
@@ -990,7 +990,6 @@ h6 {
     }
 }
 
-
 /* Pagination
 /* ---------------------------------------------------------- */
 
@@ -1023,13 +1022,12 @@ h6 {
     font-size: 1.3rem;
 }
 
-
 /* Footer
 /* ---------------------------------------------------------- */
 
 .site-foot {
     padding: 20px 0 40px 0;
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 1.3rem;
     background: var(--color-base);
 }
@@ -1041,12 +1039,12 @@ h6 {
 }
 
 .site-foot-nav a {
-    color: rgba(255,255,255,0.7);
+    color: rgba(255, 255, 255, 0.7);
 }
 
 .site-foot-nav a:hover {
     text-decoration: none;
-    color: rgba(255,255,255,1);
+    color: rgba(255, 255, 255, 1);
 }
 
 .site-foot-nav-right a {
@@ -1058,74 +1056,70 @@ h6 {
     padding-right: 0;
 }
 
-
-
-
 body {
-  color: #333;
-  -webkit-font-smoothing: antialiased;
-  margin: 0;
-  background-color: rgb(252, 252, 252);
+    color: #333;
+    -webkit-font-smoothing: antialiased;
+    margin: 0;
+    background-color: rgb(252, 252, 252);
 }
 
 .hm-100 {
-  min-height: 100vh;
+    min-height: 100vh;
 }
 
 .social-buttons {
-  margin-top: 2vw;
-  margin-bottom: 2vw;
-  font-size: 1.75em;
+    margin-top: 2vw;
+    margin-bottom: 2vw;
+    font-size: 1.75em;
 }
 
 .social-buttons a {
-  color: $grey-color !important;
+    color: $grey-color !important;
 }
 
 .social-buttons svg:hover {
-  color: $base-color;
-  transition: 500ms;
+    color: $base-color;
+    transition: 500ms;
 }
 
 .social-buttons svg {
-  margin-right: 0.5rem;
+    margin-right: 0.5rem;
 }
 
 .contact-section {
-  justify-content: left;
+    justify-content: left;
 }
 
 .contact-button {
-  color: white;
-  padding: 10px 20px  !important;
-  border-radius: 100px !important;
-  background-color: $base-color !important;
-  border-color: $base-color !important;
-  -webkit-transition: all 500ms ease !important;
-  transition: all 500ms ease !important;
-  font-family: 'Museosans 100', sans-serif;
-  font-size: 16px;
+    color: white;
+    padding: 10px 20px !important;
+    border-radius: 100px !important;
+    background-color: $base-color !important;
+    border-color: $base-color !important;
+    -webkit-transition: all 500ms ease !important;
+    transition: all 500ms ease !important;
+    font-family: "Museosans 100", sans-serif;
+    font-size: 16px;
 }
 
 .contact-button:hover {
-  background-color: $base-color !important;
-  box-shadow: 0 16px 32px -6px rgba(0, 0, 0, .2);
+    background-color: $base-color !important;
+    box-shadow: 0 16px 32px -6px rgba(0, 0, 0, 0.2);
 }
 
-
 .site-head {
-  color: black;
+    color: black;
 }
 
 .site-nav {
     justify-content: flex-end;
 }
 .site-nav-item {
-  color: inherit;
-  transition: 0.5s;
-  z-index: 500;
-  font-weight: 600;
-  opacity: 0.4;
+    color: inherit;
+    transition: 0.5s;
+    z-index: 500;
+    font-weight: 600;
+    opacity: 0.4;
 }
 
 .nav-current a {
@@ -1138,91 +1132,95 @@ body {
 }
 
 .site-nav-item:hover {
-  transition: 0.5s;
-  color: $base-color;
-  text-decoration: none;
+    transition: 0.5s;
+    color: $base-color;
+    text-decoration: none;
 }
 
 .icon-wrapper {
-  font-size: 1px;
+    font-size: 1px;
 }
 
 p.institution {
-  color: rgba(0,0,0,.6);
-  font-size: .75rem;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 0.75rem;
 }
 
 li p {
-  margin: 0;
+    margin: 0;
 }
 
 .description {
-  box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 .card-text {
- font-weight: 900; 
+    font-weight: 900;
 }
 
 .card-block {
-  padding: 1.25rem;
+    padding: 1.25rem;
 }
 
 .card-title {
-  font-size: 1rem;
+    font-size: 1rem;
 }
 
 .grid-row {
-  margin: 2vh;
+    margin: 2vh;
 }
 
-
-@mixin BoxShadowHelper($level: 1){
-  @if $level == 1 {
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, .16), 0 2px 10px 0 rgba(0, 0, 0, .12);
-  }
-  @if $level == 2 {
-    box-shadow: 0 5px 11px 0 rgba(0, 0, 0, .18), 0 4px 15px 0 rgba(0, 0, 0, .15);
-  }
+@mixin BoxShadowHelper($level: 1) {
+    @if $level == 1 {
+        box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.16),
+            0 2px 10px 0 rgba(0, 0, 0, 0.12);
+    }
+    @if $level == 2 {
+        box-shadow: 0 5px 11px 0 rgba(0, 0, 0, 0.18),
+            0 4px 15px 0 rgba(0, 0, 0, 0.15);
+    }
 }
 
-a {transition: .25s all;}
+a {
+    transition: 0.25s all;
+}
 
 .card {
-  overflow: hidden;
-  @include BoxShadowHelper(1);
-  transition: .25s box-shadow;
-  &:focus,
-  &:hover {@include BoxShadowHelper(2);}
+    overflow: hidden;
+    @include BoxShadowHelper(1);
+    transition: 0.25s box-shadow;
+    &:focus,
+    &:hover {
+        @include BoxShadowHelper(2);
+    }
 }
 .card-inverse .card-img-overlay {
-  background-color: rgba(#333,.85);
-  border-color: rgba(#333,.85);
+    background-color: rgba(#333, 0.85);
+    border-color: rgba(#333, 0.85);
 }
 
 .email {
-  color: $grey-color;
-  font-size: 1.0rem;
+    color: $grey-color;
+    font-size: 1rem;
 }
 
-
 @media only screen and (max-width: 600px) {
-  nav {
-    display: none;
-  }
+    nav {
+        display: none;
+    }
 }
 
 .site-title {
-  font-size: 2.1rem;
-  font-weight: 700;
-  color: black;
-  text-decoration: none;
-  text-transform: uppercase;
+    font-size: 2.1rem;
+    font-weight: 700;
+    color: black;
+    text-decoration: none;
+    text-transform: uppercase;
 }
 
 .site-title:hover {
-  text-decoration: none;
-  color: black;
+    text-decoration: none;
+    color: black;
 }
 
 .site-wrapper {
@@ -1230,11 +1228,9 @@ a {transition: .25s all;}
     min-height: 100vh;
 }
 
-
 .intro-text {
     margin-top: 10vh;
     line-height: 2.25em;
-    
 }
 
 .site-titles {
@@ -1246,32 +1242,52 @@ a {transition: .25s all;}
 }
 
 @keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Firefox < 16 */
 @-moz-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Safari, Chrome and Opera > 12.1 */
 @-webkit-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Internet Explorer */
 @-ms-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 /* Opera < 12.1 */
 @-o-keyframes fadein {
-    from { opacity: 0; }
-    to   { opacity: 1; }
+    from {
+        opacity: 0;
+    }
+    to {
+        opacity: 1;
+    }
 }
 
 .content-body pre {
@@ -1291,4 +1307,51 @@ a {transition: .25s all;}
 code {
     background-color: transparent;
     color: black;
+}
+
+.spotify-section {
+    height: inherit;
+    span {
+        font-style: italic;
+    }
+
+    .spotify-track {
+        position: relative;
+        background-color: white;
+        box-shadow: 0px 0px 5px 5px rgba(0, 0, 0, 0.05);
+        border-radius: 10px;
+        overflow: hidden;
+        margin-left: 5em;
+        margin-right: 5em;
+
+        .spotify-image {
+            & img {
+                width: 100%;
+            }
+        }
+
+        .track-text {
+            padding: 1vh;
+            line-height: 1.5em;
+        }
+
+        .track {
+            font-weight: 800;
+        }
+
+        .artist {
+            font-weight: 100;
+        }
+    }
+
+    .spotify-track:hover {
+        -webkit-box-shadow: rgba(39, 44, 49, 0.07) 8px 28px 50px,
+            rgba(39, 44, 49, 0.04) 1px 6px 12px;
+        box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
+            1px 6px 12px rgba(39, 44, 49, 0.04);
+        -webkit-transition: all 0.4s ease;
+        transition: all 0.4s ease;
+        -webkit-transform: translate3D(0, -1px, 0) scale(1.02);
+        transform: translate3D(0, -1px, 0) scale(1.02);
+    }
 }
