@@ -1,7 +1,7 @@
 import React from "react";
 import PropTypes from "prop-types";
 import { graphql } from "gatsby";
-import fetch from 'isomorphic-fetch'
+import fetch from "isomorphic-fetch";
 
 import { Layout, PostCard, Pagination } from "../components/common";
 import { MetaData } from "../components/common/meta";
@@ -33,61 +33,128 @@ import * as Vibrant from "node-vibrant";
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
+import { Palette } from "react-palette";
 
-function isLight(color) {
-    // Check the format of the color, HEX or RGB?
-    var r,
-        g,
-        b,
-        hsp = 0;
-    if (color.match(/^rgb/)) {
-        // If HEX --> store the red, green, blue values in separate variables
-        color = color.match(
-            /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
-        );
-
-        var r = color[1];
-        var g = color[2];
-        var b = color[3];
-    } else {
-        // If RGB --> Convert it to HEX: http://gist.github.com/983661
-        color = +(
-            "0x" + color.slice(1).replace(color.length < 5 && /./g, "$&$&")
-        );
-
-        var r = color >> 16;
-        var g = (color >> 8) & 255;
-        var b = color & 255;
+class SpotifyWidget extends React.Component {
+    constructor(props) {
+        super(props);
     }
 
-    // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
-    hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
+    componentDidMount() {}
 
-    // Using the HSP value, determine whether the color is light or dark
-    if (hsp > 126.5) {
-        return true;
-    } else {
-        return false;
+    isLight(loading, color) {
+        if (loading == true) {
+            return false;
+        } else {
+            // Check the format of the color, HEX or RGB?
+            var r,
+                g,
+                b,
+                hsp = 0;
+            if (color.match(/^rgb/)) {
+                // If HEX --> store the red, green, blue values in separate variables
+                color = color.match(
+                    /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
+                );
+
+                var r = color[1];
+                var g = color[2];
+                var b = color[3];
+            } else {
+                // If RGB --> Convert it to HEX: http://gist.github.com/983661
+                color = +(
+                    "0x" +
+                    color.slice(1).replace(color.length < 5 && /./g, "$&$&")
+                );
+
+                var r = color >> 16;
+                var g = (color >> 8) & 255;
+                var b = color & 255;
+            }
+
+            // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+            hsp = Math.sqrt(
+                0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)
+            );
+
+            // Using the HSP value, determine whether the color is light or dark
+            if (hsp > 126.5) {
+                return "white";
+            } else {
+                return "black";
+            }
+        }
+    }
+
+    render() {
+        return (
+            <>
+                <Palette src={this.props.trackImage}>
+                    {({ data, loading, error }) => (
+                        <a
+                            className="grid-x spotify-track"
+                            data-equalizer
+                            style={{
+                                backgroundColor: data.vibrant
+                            }}
+                            href={this.props.trackLink}
+                            rel="noreferrer" target="_blank" 
+                        >
+                            <div
+                                className="cell small-4 spotify-image text-left"
+                                data-equalizer-watch
+                            >
+                                <div
+                                    style={{
+                                        background:
+                                            "linear-gradient(90deg, rgba(0,0,0,0) 30%, " +
+                                            data.vibrant +
+                                            " 100%)",
+                                        position: "absolute",
+                                        top: 0,
+                                        width: "inherit",
+                                        height: "100%"
+                                    }}
+                                ></div>
+                                <img src={this.props.trackImage} />
+                            </div>
+                            <div
+                                className="cell small-8 text-left track-text"
+                                data-equalizer-watch
+                                style={{
+                                    color: this.isLight(loading, data.vibrant)
+                                }}
+                            >
+                                <div className="track">
+                                    {this.props.trackName}
+                                </div>
+                                <div className="artist">
+                                    <span>{this.props.trackAlbum}</span>
+                                    <span> - </span>
+                                    <span>{this.props.trackArtist}</span>
+                                </div>
+                            </div>
+                        </a>
+                    )}
+                </Palette>
+            </>
+        );
     }
 }
 
 class Index extends React.Component {
     // const Index = ({ data, location, pageContext }) => {
-
     constructor(props) {
         super(props);
+
         this.state = {
-            colors: [],
-            currentlyPlayingTrack: "",
-            currentlyPlayingTrackImage: "",
-            currentlyPlayingTrackAlbum: "",
-            currentlyPlaying: false,
-            tracks: []
+            currentlyPlaying: false
         };
-        this.getCurrentlyPlayingTrack();
+
+        this.getTracks(1);
     }
 
-    getAllTracks() {
+    getTracks(limit) {
         fetch(
             `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=00ed4e34d5b3eb0a163d73e4778b2ce4&format=json`,
             {
@@ -96,154 +163,40 @@ class Index extends React.Component {
         )
             .then(res => res.json())
             .then(res => {
-                var tracks = res.recenttracks.track
-                // Vibrant.from(trackImage)
-                //     .getPalette()
-                //     .then(palette => {
-                //         var color = palette.Vibrant.hex;
-                //         var trackColor = isLight(color) ? "white" : "black";
-                //         this.setState({
-                //             currentlyPlayingTrackColor: trackColor,
-                //             currentlyPlayingTrackBackgroundColor: color
-                //         });
-                //     })
-                //     .catch(function(error) {
-                //         console.log(
-                //             "There has been a problem with your fetch operation: " +
-                //                 error.message
-                //         );
-                //     });
+                var tmpState = [];
+                var tracks = res.recenttracks.track;
+                for (var i = 0; i < tracks.length; i++) {
+                    if (i == limit) {
+                        break;
+                    }
+                    tmpState.push(
+                        <SpotifyWidget
+                            key={i}
+                            trackName={tracks[i].name}
+                            trackAlbum={tracks[i].album["#text"]}
+                            trackArtist={tracks[i].artist["#text"]}
+                            trackImage={tracks[i].image[2]["#text"]}
+                            trackLink={tracks[i].url}
+                        />
+                    );
+                }
 
                 this.setState({
-                    tracks: tracks
-                });
-            })
-            .catch(e => {
-            });
-    }
-
-    getCurrentlyPlayingTrack() {
-        fetch(
-            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=00ed4e34d5b3eb0a163d73e4778b2ce4&format=json`,
-            {
-                method: "GET" // POST
-            }
-        )
-            .then(res => res.json())
-            .then(res => {
-                var trackName = res.recenttracks.track[0].name;
-                var trackImage = res.recenttracks.track[0].image[2]["#text"];
-                var trackArtist = res.recenttracks.track[0].artist["#text"];
-                var trackAlbum = res.recenttracks.track[0].album["#text"];
-                console.log(res.recenttracks.track[0]);
-
-                Vibrant.from(trackImage)
-                    .getPalette()
-                    .then(palette => {
-                        var color = palette.Vibrant.hex;
-                        var trackColor = isLight(color) ? "white" : "black";
-                        this.setState({
-                            currentlyPlayingTrackColor: trackColor,
-                            currentlyPlayingTrackBackgroundColor: color
-                        });
-                    })
-                    .catch(function(error) {
-                        console.log(
-                            "There has been a problem with your fetch operation: " +
-                                error.message
-                        );
-                    });
-
-                this.setState({
-                    currentlyPlayingTrack: trackName,
-                    currentlyPlayingTrackImage: trackImage,
-                    currentlyPlayingTrackArtist: trackArtist,
-                    currentlyPlayingTrackAlbum: trackAlbum,
+                    currentlyPlayingTrack: tmpState,
                     currentlyPlaying: true
                 });
             })
             .catch(e => {
+                console.log(e);
                 this.setState({
                     currentlyPlayingTrack: "-"
                 });
             });
     }
 
-    renderSwatches = () => {
-        const { colors } = this.state;
-
-        return colors.map((color, id) => {
-            return (
-                <div
-                    key={id}
-                    style={{
-                        backgroundColor: color,
-                        width: 100,
-                        height: 100
-                    }}
-                />
-            );
-        });
-    };
-
-    getColors = colors =>
-        this.setState(state => ({ colors: [...state.colors, ...colors] }));
-
     render() {
         const { data, location, pageContext } = this.props;
         const posts = data.allGhostPost.edges;
-
-        const SpotifyTrack = (
-            <>
-                <span>I am currently listening this track on Spotify:</span>
-                <div
-                    className="grid-x spotify-track"
-                    data-equalizer
-                    style={{
-                        backgroundColor: this.state
-                            .currentlyPlayingTrackBackgroundColor
-                    }}
-                >
-                    <div
-                        className="cell small-4 spotify-image text-left"
-                        data-equalizer-watch
-                    >
-                        <div
-                            style={{
-                                background:
-                                    "linear-gradient(90deg, rgba(0,0,0,0) 30%, " +
-                                    this.state
-                                        .currentlyPlayingTrackBackgroundColor +
-                                    " 100%)",
-                                position: "absolute",
-                                top: 0,
-                                width: "inherit",
-                                height: "100%"
-                            }}
-                        ></div>
-                        <img src={this.state.currentlyPlayingTrackImage} />
-                    </div>
-                    <div
-                        className="cell small-8 text-left track-text"
-                        data-equalizer-watch
-                        style={{
-                            color: this.state.currentlyPlayingTrackColor
-                        }}
-                    >
-                        <div className="track">
-                            {this.state.currentlyPlayingTrack}
-                        </div>
-                        <div className="artist">
-                            <span>{this.state.currentlyPlayingTrackAlbum}</span>
-                            <span> - </span>
-                            <span>
-                                {this.state.currentlyPlayingTrackArtist}
-                            </span>
-                        </div>
-                    </div>
-                </div>
-            </>
-        );
 
         return (
             <>
@@ -281,17 +234,20 @@ class Index extends React.Component {
                             <div className="about-section">
                                 <p>
                                     Currently working on my Master Thesis{" "}
-                                    <a rel="noreferrer" href="https://uva.nl">
+                                    <a rel="noreferrer" target="_blank" href="https://uva.nl">
                                         @UniversityOfAmsterdam
                                     </a>{" "}
                                     in the field of Music Information Retrieval
                                 </p>
                             </div>
                             <div className="spotify-section">
-                                {this.state.currentlyPlaying ? 
-                                SpotifyTrack
-                                 : ''
-                                }
+                                <span>
+                                    I am currently listening this track on
+                                    Spotify:
+                                </span>
+                                {this.state.currentlyPlaying
+                                    ? this.state.currentlyPlayingTrack
+                                    : ""}
                             </div>
                             <div>
                                 <p className="email">

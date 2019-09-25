@@ -1324,6 +1324,9 @@ code {
         margin-left: 5em;
         margin-right: 5em;
 
+        margin-top: 2em;
+        margin-bottom: 2em;
+
         .spotify-image {
             & img {
                 width: 100%;
@@ -1345,6 +1348,7 @@ code {
     }
 
     .spotify-track:hover {
+        text-decoration: none;
         -webkit-box-shadow: rgba(39, 44, 49, 0.07) 8px 28px 50px,
             rgba(39, 44, 49, 0.04) 1px 6px 12px;
         box-shadow: 8px 28px 50px rgba(39, 44, 49, 0.07),
