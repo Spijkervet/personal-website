@@ -95,9 +95,45 @@ class Index extends React.Component {
             currentlyPlayingTrack: "",
             currentlyPlayingTrackImage: "",
             currentlyPlayingTrackAlbum: "",
-            currentlyPlaying: false
+            currentlyPlaying: false,
+            tracks: []
         };
         this.getCurrentlyPlayingTrack();
+    }
+
+    getAllTracks() {
+        fetch(
+            `http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=${process.env.LASTFM_API_KEY}&format=json`,
+            {
+                method: "GET" // POST
+            }
+        )
+            .then(res => res.json())
+            .then(res => {
+                var tracks = res.recenttracks.track
+                // Vibrant.from(trackImage)
+                //     .getPalette()
+                //     .then(palette => {
+                //         var color = palette.Vibrant.hex;
+                //         var trackColor = isLight(color) ? "white" : "black";
+                //         this.setState({
+                //             currentlyPlayingTrackColor: trackColor,
+                //             currentlyPlayingTrackBackgroundColor: color
+                //         });
+                //     })
+                //     .catch(function(error) {
+                //         console.log(
+                //             "There has been a problem with your fetch operation: " +
+                //                 error.message
+                //         );
+                //     });
+
+                this.setState({
+                    tracks: tracks
+                });
+            })
+            .catch(e => {
+            });
     }
 
     getCurrentlyPlayingTrack() {
