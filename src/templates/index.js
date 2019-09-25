@@ -89,7 +89,7 @@ class Index extends React.Component {
 
     getAllTracks() {
         fetch(
-            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=${process.env.LASTFM_API_KEY}&format=json`,
+            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=00ed4e34d5b3eb0a163d73e4778b2ce4&format=json`,
             {
                 method: "GET" // POST
             }
@@ -124,7 +124,7 @@ class Index extends React.Component {
 
     getCurrentlyPlayingTrack() {
         fetch(
-            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=${process.env.LASTFM_API_KEY}&format=json`,
+            `https://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=janewilde&api_key=00ed4e34d5b3eb0a163d73e4778b2ce4&format=json`,
             {
                 method: "GET" // POST
             }
