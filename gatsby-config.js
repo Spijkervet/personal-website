@@ -186,6 +186,14 @@ module.exports = {
         `gatsby-plugin-react-helmet`,
         `gatsby-plugin-force-trailing-slashes`,
         `gatsby-plugin-offline`,
-        `gatsby-plugin-sass`
+        `gatsby-plugin-sass`,
+        {
+            resolve: "gatsby-source-lastfm",
+            options: {
+                api_key: "00ed4e34d5b3eb0a163d73e4778b2ce4",
+                username: "janewilde",
+                limit: 200 // the maximum number of playbacks to pull in
+            }
+        }
     ]
 };
