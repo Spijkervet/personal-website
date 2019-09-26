@@ -58,6 +58,7 @@ class SpotifyWidget extends React.Component {
                 crossOrigin={"anonymous"}
                 src={this.props.trackImage}
                 ref={this.imgRef}
+                alt={this.props.trackName}
                 onLoad={() => {
                     const colorThief = new ColorThief();
                     const img = this.imgRef.current;
