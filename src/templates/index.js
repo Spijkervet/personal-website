@@ -18,6 +18,8 @@ import "@fortawesome/fontawesome-svg-core/styles.css";
 
 import * as Vibrant from "node-vibrant";
 
+import ColorThief from "colorthief";
+
 // import {Spotify} from 'node-spotify-api'
 
 // var spotify = new Spotify({
@@ -33,110 +35,131 @@ import * as Vibrant from "node-vibrant";
  * in /utils/siteConfig.js under `postsPerPage`.
  *
  */
-import { Palette } from "react-palette";
 
 class SpotifyWidget extends React.Component {
     constructor(props) {
         super(props);
+        this.imgRef = React.createRef();
+
+        this.state = {
+            backgroundColor: "white"
+        };
     }
 
-    componentDidMount() {}
+    componentDidMount() {
+        let v = Vibrant.from(this.props.trackImage);
+        v.getPalette((err, palette) => {
+        });
+    }
 
-    isLight(loading, color) {
-        if (loading == true) {
-            return false;
-        } else {
-            // Check the format of the color, HEX or RGB?
-            var r,
-                g,
-                b,
-                hsp = 0;
-            if (color.match(/^rgb/)) {
-                // If HEX --> store the red, green, blue values in separate variables
-                color = color.match(
-                    /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
-                );
-
-                var r = color[1];
-                var g = color[2];
-                var b = color[3];
-            } else {
-                // If RGB --> Convert it to HEX: http://gist.github.com/983661
-                color = +(
-                    "0x" +
-                    color.slice(1).replace(color.length < 5 && /./g, "$&$&")
-                );
-
-                var r = color >> 16;
-                var g = (color >> 8) & 255;
-                var b = color & 255;
-            }
-
-            // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
-            hsp = Math.sqrt(
-                0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)
+    isLight(color) {
+        // Check the format of the color, HEX or RGB?
+        var r,
+            g,
+            b,
+            hsp = 0;
+        if (color.match(/^rgb/)) {
+            // If HEX --> store the red, green, blue values in separate variables
+            color = color.match(
+                /^rgba?\((\d+),\s*(\d+),\s*(\d+)(?:,\s*(\d+(?:\.\d+)?))?\)$/
             );
 
-            // Using the HSP value, determine whether the color is light or dark
-            if (hsp > 126.5) {
-                return "white";
-            } else {
-                return "black";
-            }
+            var r = color[1];
+            var g = color[2];
+            var b = color[3];
+        } else {
+            // If RGB --> Convert it to HEX: http://gist.github.com/983661
+            color = +(
+                "0x" +
+                color.slice(1).replace(color.length < 5 && /./g, "$&$&")
+            );
+
+            var r = color >> 16;
+            var g = (color >> 8) & 255;
+            var b = color & 255;
+        }
+
+        // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
+        hsp = Math.sqrt(
+            0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)
+        );
+
+        // Using the HSP value, determine whether the color is light or dark
+        if (hsp > 126.5) {
+            return "white";
+        } else {
+            return "black";
         }
     }
 
     render() {
+        var trackImage = (
+            <img
+                crossOrigin={"anonymous"}
+                src={this.props.trackImage}
+                ref={this.imgRef}
+                onLoad={() => {
+                    const colorThief = new ColorThief();
+                    const img = this.imgRef.current;
+                    const result = colorThief.getColor(img, 25);
+                    const rgb = 'rgb(' + result.join(', ') + ')'
+                    this.setState({
+                        backgroundColor: rgb,
+                        color: this.isLight(rgb)
+                    })
+                }}
+            />
+        );
+        // var color = colorThief.getColor(trackImage);
+        // console.log('colorrr ' + color)
+
         return (
             <>
-                <Palette src={this.props.trackImage}>
-                    {({ data, loading, error }) => (
-                        <a
-                            className="grid-x spotify-track"
-                            data-equalizer
+                <a
+                    className="grid-x spotify-track"
+                    data-equalizer
+                    style={{
+                        backgroundColor: this.state.backgroundColor
+                    }}
+                    href={this.props.trackLink}
+                    rel="noreferrer"
+                    target="_blank"
+                >
+                    <div
+                        className="cell small-4 spotify-image text-left"
+                        data-equalizer-watch
+                    >
+                        <div
                             style={{
-                                backgroundColor: data.vibrant
+                                background:
+                                    "linear-gradient(90deg, rgba(0,0,0,0) 30%, " +
+                                    this.state.backgroundColor +
+                                    " 100%)",
+                                position: "absolute",
+                                top: 0,
+                                width: "inherit",
+                                height: "100%"
                             }}
-                            href={this.props.trackLink}
-                            rel="noreferrer" target="_blank" 
-                        >
-                            <div
-                                className="cell small-4 spotify-image text-left"
-                                data-equalizer-watch
-                            >
-                                <div
-                                    style={{
-                                        background:
-                                            "linear-gradient(90deg, rgba(0,0,0,0) 30%, " +
-                                            data.vibrant +
-                                            " 100%)",
-                                        position: "absolute",
-                                        top: 0,
-                                        width: "inherit",
-                                        height: "100%"
-                                    }}
-                                ></div>
-                                <img src={this.props.trackImage} />
-                            </div>
-                            <div
-                                className="cell small-8 text-left track-text"
-                                data-equalizer-watch
-                                style={{
-                                    color: this.isLight(loading, data.vibrant)
-                                }}
-                            >
-                                <div className="track">
-                                    {this.props.trackName}
-                                </div>
-                                <div className="artist">
-                                    <span>{this.props.trackAlbum}</span>
-                                    <span> - </span>
-                                    <span>{this.props.trackArtist}</span>
-                                </div>
-                            </div>
-                        </a>
-                    )}
-                </Palette>
+                        ></div>
+                        {trackImage}
+                    </div>
+                    <div
+                        className="cell small-8 text-left track-text"
+                        data-equalizer-watch
+                        style={
+                            {
+                                color: this.state.color
+                            }
+                        }
+                    >
+                        <div className="track">{this.props.trackName}</div>
+                        <div className="artist">
+                            <span>{this.props.trackAlbum}</span>
+                            <span> - </span>
+                            <span>{this.props.trackArtist}</span>
+                        </div>
+                    </div>
+                </a>
             </>
         );
     }
@@ -234,7 +257,11 @@ class Index extends React.Component {
                             <div className="about-section">
                                 <p>
                                     Currently working on my Master Thesis{" "}
-                                    <a rel="noreferrer" target="_blank" href="https://uva.nl">
+                                    <a
+                                        rel="noreferrer"
+                                        target="_blank"
+                                        href="https://uva.nl"
+                                    >
                                         @UniversityOfAmsterdam
                                     </a>{" "}
                                     in the field of Music Information Retrieval
