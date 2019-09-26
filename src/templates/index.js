@@ -16,8 +16,6 @@ import {
 } from "@fortawesome/free-brands-svg-icons";
 import "@fortawesome/fontawesome-svg-core/styles.css";
 
-import * as Vibrant from "node-vibrant";
-
 import ColorThief from "colorthief";
 
 // import {Spotify} from 'node-spotify-api'
@@ -46,11 +44,7 @@ class SpotifyWidget extends React.Component {
         };
     }
 
-    componentDidMount() {
-        let v = Vibrant.from(this.props.trackImage);
-        v.getPalette((err, palette) => {
-        });
-    }
+    componentDidMount() {}
 
     isLight(color) {
         // Check the format of the color, HEX or RGB?
@@ -70,8 +64,7 @@ class SpotifyWidget extends React.Component {
         } else {
             // If RGB --> Convert it to HEX: http://gist.github.com/983661
             color = +(
-                "0x" +
-                color.slice(1).replace(color.length < 5 && /./g, "$&$&")
+                "0x" + color.slice(1).replace(color.length < 5 && /./g, "$&$&")
             );
 
             var r = color >> 16;
@@ -80,9 +73,7 @@ class SpotifyWidget extends React.Component {
         }
 
         // HSP (Highly Sensitive Poo) equation from http://alienryderflex.com/hsp.html
-        hsp = Math.sqrt(
-            0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b)
-        );
+        hsp = Math.sqrt(0.299 * (r * r) + 0.587 * (g * g) + 0.114 * (b * b));
 
         // Using the HSP value, determine whether the color is light or dark
         if (hsp > 126.5) {
@@ -102,11 +93,11 @@ class SpotifyWidget extends React.Component {
                     const colorThief = new ColorThief();
                     const img = this.imgRef.current;
                     const result = colorThief.getColor(img, 25);
-                    const rgb = 'rgb(' + result.join(', ') + ')'
+                    const rgb = "rgb(" + result.join(", ") + ")";
                     this.setState({
                         backgroundColor: rgb,
                         color: this.isLight(rgb)
-                    })
+                    });
                 }}
             />
         );
@@ -146,11 +137,9 @@ class SpotifyWidget extends React.Component {
                     <div
                         className="cell small-8 text-left track-text"
                         data-equalizer-watch
-                        style={
-                            {
-                                color: this.state.color
-                            }
-                        }
+                        style={{
+                            color: this.state.color
+                        }}
                     >
                         <div className="track">{this.props.trackName}</div>
                         <div className="artist">
