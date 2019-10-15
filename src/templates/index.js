@@ -111,8 +111,8 @@ class Index extends React.Component {
                 {/* <Container> */}
                 <Layout isHome={true}>
                     <div className="grid-x text-center site-titles intro-text">
-                        <div className="cell large-4"></div>
-                        <div className="cell large-4">
+                        <div className="cell large-3"></div>
+                        <div className="cell large-6">
                             <p>
                                 I am a music producer, programmer and
                                 occassional ethical hacker from Amsterdam. I am
@@ -164,7 +164,7 @@ class Index extends React.Component {
                                 </a>
                             </div>
                         </div>
-                        <div className="cell large-4"></div>
+                        <div className="cell large-3"></div>
                     </div>
                     {/* <TwitterTimelineEmbed
                     sourceType="profile"
