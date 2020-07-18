@@ -68,7 +68,7 @@
     "isomorphic-fetch": "^2.2.1",
     "last-fm": "^5.2.2",
     "lastfm": "^0.9.3",
-    "lodash": "4.17.15",
+    "lodash": "4.17.19",
     "mathjax-node": "^2.1.1",
     "node-sass": "^4.12.0",
     "node-spotify-api": "^1.1.1",
